@@ -1,0 +1,34 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Calculadora IMC</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <form>
+        <input id="inp_peso" size="10" placeholder="peso (kg)"></input>
+        <input id="inp_altura" size="10" placeholder="altura (m)"></input>
+        <button type="button" id="btn_submit">Enviar</button>
+    </form>
+    <h1></h1>
+    <script>
+        $("document").ready(function(){
+            $("#btn_submit").click(function(){
+                var peso = parseFloat($("#inp_peso").val())
+                var altura = parseFloat($("#inp_altura").val())
+                $.ajax({
+                    url: "https://lsviii.pythonanywhere.com/api",
+                    type: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify({"peso": peso, "altura": altura})
+                }).done(function(data) {$("h1").html("IMC: " + data["resultado"])})
+
+            })
+        })
+    </script>
+
+</body>
+</html>
